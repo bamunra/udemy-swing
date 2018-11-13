@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class MyFrame extends JFrame {
 
@@ -93,6 +94,16 @@ public class MyFrame extends JFrame {
                 JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) event.getSource();
                 formPanel.setVisible(menuItem.isSelected());
 
+            }
+        });
+
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        exitItem.setMnemonic(KeyEvent.VK_X);
+
+        exitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
 

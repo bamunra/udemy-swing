@@ -3,6 +3,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class FormPanel extends JPanel {
 
@@ -29,14 +30,19 @@ public class FormPanel extends JPanel {
         setPreferredSize(dim);
 
         nameLabel = new JLabel("Name: ");
-        occupationLabel = new JLabel("Occupation: ");
         nameField = new JTextField(10);
+        occupationLabel = new JLabel("Occupation: ");
         occupationField = new JTextField(10);
         ageList = new JList();
         comboBox = new JComboBox();
         citisenCheckBox = new JCheckBox();
         taxField = new JTextField(10);
         taxLable = new JLabel("Tax ID:");
+
+
+        nameLabel.setDisplayedMnemonic(KeyEvent.VK_N);
+        nameLabel.setLabelFor(nameField);
+
 
         // setup Radio
 
@@ -49,6 +55,7 @@ public class FormPanel extends JPanel {
         genderGroup = new ButtonGroup();
         genderGroup.add(maleRadio);
         genderGroup.add(femaleRadio);
+        maleRadio.setSelected(true);
 
 
         // setup tax
@@ -85,7 +92,9 @@ public class FormPanel extends JPanel {
         comboBox.setModel(empModel);
         comboBox.setEditable(true);
 
+
         okBtn = new JButton("OK");
+        okBtn.setMnemonic(KeyEvent.VK_O);
 
         okBtn.addActionListener(new ActionListener() {
             @Override
