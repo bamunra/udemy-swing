@@ -78,12 +78,23 @@ public class MyFrame extends JFrame {
 
         JMenu windowMenu = new JMenu("Window");
         JMenu showMenu = new JMenu("Show");
-        JMenuItem showFormItem = new JMenuItem("Person Form");
+        JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");
+        showFormItem.setSelected(true);
+
         showMenu.add(showFormItem);
         windowMenu.add(showMenu);
-        
+
         menuBar.add(fileMenu);
         menuBar.add(windowMenu);
+
+        showFormItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) event.getSource();
+                formPanel.setVisible(menuItem.isSelected());
+
+            }
+        });
 
         return menuBar;
     }
