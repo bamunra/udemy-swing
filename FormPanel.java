@@ -13,6 +13,7 @@ public class FormPanel extends JPanel {
     private JButton okBtn;
     private FormListener formListener;
     private JList ageList;
+    private JComboBox comboBox;
 
 
     public FormPanel() {
@@ -25,8 +26,11 @@ public class FormPanel extends JPanel {
         occupationLabel = new JLabel("Occupation: ");
         nameField = new JTextField(10);
         occupationField = new JTextField(10);
-
         ageList = new JList();
+        comboBox = new JComboBox();
+
+        // setup List box
+
         DefaultListModel ageModel = new DefaultListModel();
         ageModel.addElement(new AgeCategory(0,"Under 18"));
         ageModel.addElement(new AgeCategory(1,"18 to 65"));
@@ -36,6 +40,14 @@ public class FormPanel extends JPanel {
         ageList.setBorder(BorderFactory.createEtchedBorder());
         ageList.setSelectedIndex(2);
 
+        // setup ComboBox
+        DefaultComboBoxModel empModel = new DefaultComboBoxModel();
+        empModel.addElement("employed");
+        empModel.addElement("self-employed");
+        empModel.addElement("unemployed");
+        comboBox.setModel(empModel);
+        comboBox.setEditable(true);
+
         okBtn = new JButton("OK");
 
         okBtn.addActionListener(new ActionListener() {
@@ -44,14 +56,24 @@ public class FormPanel extends JPanel {
                 String name = nameField.getText();
                 String occupation = occupationField.getText();
                 AgeCategory ageCat = (AgeCategory) ageList.getSelectedValue();
+                String empCat = String.valueOf(comboBox.getSelectedIndex());
 
-                FormEvent event = new FormEvent(this, name, occupation,ageCat.getId());
+                FormEvent event = new FormEvent(this, name, occupation,ageCat.getId(),empCat);
                 if (formListener != null) {
                     formListener.formEventOccured(event);
                 }
             }
         });
 
+        layoutComponent();
+
+    }
+
+    public void setFormListener(FormListener formListener) {
+        this.formListener = formListener;
+    }
+
+    public void layoutComponent(){
         //setBorder(BorderFactory.createTitledBorder("Add Prefix"));
         Border innerBorder = BorderFactory.createTitledBorder("Add Person");
         Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -64,58 +86,82 @@ public class FormPanel extends JPanel {
 
 
         gc.fill = GridBagConstraints.NONE;
-
+        gc.gridy = 0;
 
         // first row
         gc.weightx = 1;
         gc.weighty = 0;
         gc.anchor = GridBagConstraints.LAST_LINE_END;
         gc.gridx = 0;
-        gc.gridy = 0;
         add(nameLabel, gc);
 
         gc.gridx = 1;
-        gc.gridy = 0;
         gc.anchor = GridBagConstraints.LAST_LINE_START;
         add(nameField, gc);
 
-        // second row
+        // next row
+
+        gc.gridy++;
+
         gc.weightx = 1;
         gc.weighty = 0.1;
         gc.anchor = GridBagConstraints.LAST_LINE_END;
         gc.gridx = 0;
-        gc.gridy = 1;
         gc.insets = new Insets(0, 0, 0, 0);
         add(occupationLabel, gc);
 
         gc.gridx = 1;
-        gc.gridy = 1;
         gc.anchor = GridBagConstraints.LAST_LINE_START;
         add(occupationField, gc);
 
 
-        //third row
+        //next row
+
+        gc.gridy++;
+
+        gc.weightx = 1;
+        gc.weighty = 0.1;
+        gc.anchor = GridBagConstraints.FIRST_LINE_END;
+        gc.gridx = 0;
+        gc.insets = new Insets(0, 0, 0, 0);
+        add(new JLabel("Age: "), gc);
+
+
         gc.weightx = 1;
         gc.weighty = 0.5;
         gc.gridx = 1;
-        gc.gridy = 2;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(ageList, gc);
 
         //foth row
+
+
+        gc.gridy++;
+
+        gc.weightx = 1;
+        gc.weighty = 0.8;
+        gc.anchor = GridBagConstraints.FIRST_LINE_END;
+        gc.gridx = 0;
+        gc.insets = new Insets(0, 0, 0, 0);
+        add(new JLabel("employment: "), gc);
+
         gc.weightx = 1;
         gc.weighty = 1.1;
         gc.gridx = 1;
-        gc.gridy = 3;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(comboBox, gc);
+
+        //foth row
+
+        gc.gridy++;
+
+        gc.weightx = 1;
+        gc.weighty = 1.1;
+        gc.gridx = 1;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(okBtn, gc);
-
-
     }
 
-    public void setFormListener(FormListener formListener) {
-        this.formListener = formListener;
-    }
 }
 class AgeCategory{
     private int id;

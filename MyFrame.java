@@ -50,8 +50,9 @@ public class MyFrame extends JFrame{
                 String name = event.getName();
                 String occupation = event.getOccupation();
                 int ageCat = event.getAgeCategory();
+                String empCat = event.getEmpCategory();
 
-                textArea.appendTxt(name + ": " + occupation + ": " + ageCat + "\n");
+                textArea.appendTxt(name + ": " + occupation + ": " + ageCat + ": " + empCat + "\n");
 
             }
         });
