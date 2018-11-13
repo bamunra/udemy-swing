@@ -10,6 +10,7 @@ public class MyFrame extends JFrame {
     private MyTextPanel textArea;
     private MyToolBar toolBar;
     private FormPanel formPanel;
+    private JFileChooser fileChooser;
 
 
     public MyFrame() throws HeadlessException {
@@ -19,12 +20,13 @@ public class MyFrame extends JFrame {
         setLayout(new BorderLayout());
 
         textArea = new MyTextPanel();
-        add(textArea, BorderLayout.CENTER);
-
         button1 = new JButton("Click me");
-        add(button1, BorderLayout.SOUTH);
-
         formPanel = new FormPanel();
+
+        fileChooser = new JFileChooser();
+
+        add(textArea, BorderLayout.CENTER);
+        add(button1, BorderLayout.SOUTH);
         add(formPanel, BorderLayout.WEST);
 
         button1.addActionListener(new ActionListener() {
@@ -99,8 +101,26 @@ public class MyFrame extends JFrame {
 
         fileMenu.setMnemonic(KeyEvent.VK_F);
         exitItem.setMnemonic(KeyEvent.VK_X);
-
         exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+
+        importData.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               if (fileChooser.showOpenDialog(MyFrame.this) == JFileChooser.APPROVE_OPTION){
+                   System.out.println(fileChooser.getSelectedFile());
+               }
+            }
+        });
+
+        exportData.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (fileChooser.showSaveDialog(MyFrame.this) == JFileChooser.APPROVE_OPTION){
+                    System.out.println(fileChooser.getSelectedFile());
+                }
+            }
+        });
+
 
         exitItem.addActionListener(new ActionListener() {
             @Override
