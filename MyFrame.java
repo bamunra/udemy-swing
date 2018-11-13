@@ -51,8 +51,9 @@ public class MyFrame extends JFrame{
                 String occupation = event.getOccupation();
                 int ageCat = event.getAgeCategory();
                 String empCat = event.getEmpCategory();
+                String gender = event.getGender();
 
-                textArea.appendTxt(name + ": " + occupation + ": " + ageCat + ": " + empCat + "\n");
+                textArea.appendTxt(name + ": " + occupation + ": " + ageCat + ": " + empCat +": " + gender + "\n");
 
             }
         });
@@ -60,7 +61,7 @@ public class MyFrame extends JFrame{
 
 
 
-        setSize(700, 400);
+        setSize(700, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
