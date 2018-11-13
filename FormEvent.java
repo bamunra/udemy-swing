@@ -6,6 +6,8 @@ public class FormEvent extends EventObject {
     private String occupation;
     private int ageCategory;
     private String empCategory;
+    private String taxId;
+    private boolean usCitizen;
 
 
 
@@ -19,12 +21,14 @@ public class FormEvent extends EventObject {
         super(source);
     }
 
-    public FormEvent(Object source, String name, String occupation,int ageCategory, String empCategory) {
+    public FormEvent(Object source, String name, String occupation,int ageCategory, String empCategory, String taxId, boolean usCitizen) {
         super(source);
         this.name = name;
         this.occupation = occupation;
         this.ageCategory = ageCategory;
         this.empCategory = empCategory;
+        this.taxId = taxId;
+        this.usCitizen = usCitizen;
     }
 
     public String getName() {
@@ -49,5 +53,13 @@ public class FormEvent extends EventObject {
 
     public String getEmpCategory() {
         return empCategory;
+    }
+
+    public String getTaxId() {
+        return taxId;
+    }
+
+    public boolean isUsCitizen() {
+        return usCitizen;
     }
 }

@@ -14,6 +14,9 @@ public class FormPanel extends JPanel {
     private FormListener formListener;
     private JList ageList;
     private JComboBox comboBox;
+    private JCheckBox citisenCheckBox;
+    private JTextField taxField;
+    private JLabel taxLable;
 
 
     public FormPanel() {
@@ -28,13 +31,31 @@ public class FormPanel extends JPanel {
         occupationField = new JTextField(10);
         ageList = new JList();
         comboBox = new JComboBox();
+        citisenCheckBox = new JCheckBox();
+        taxField = new JTextField(10);
+        taxLable = new JLabel("Tax ID:");
+
+        // set up tax
+
+        taxLable.setEnabled(false);
+        taxField.setEnabled(false);
+
+        citisenCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean isTicked = citisenCheckBox.isSelected();
+                taxLable.setEnabled(isTicked);
+                taxField.setEnabled(isTicked);
+            }
+        });
+
 
         // setup List box
 
         DefaultListModel ageModel = new DefaultListModel();
-        ageModel.addElement(new AgeCategory(0,"Under 18"));
-        ageModel.addElement(new AgeCategory(1,"18 to 65"));
-        ageModel.addElement(new AgeCategory(2,"65 over"));
+        ageModel.addElement(new AgeCategory(0, "Under 18"));
+        ageModel.addElement(new AgeCategory(1, "18 to 65"));
+        ageModel.addElement(new AgeCategory(2, "65 over"));
         ageList.setModel(ageModel);
         ageList.setPreferredSize(new Dimension(110, 66));
         ageList.setBorder(BorderFactory.createEtchedBorder());
@@ -57,8 +78,11 @@ public class FormPanel extends JPanel {
                 String occupation = occupationField.getText();
                 AgeCategory ageCat = (AgeCategory) ageList.getSelectedValue();
                 String empCat = String.valueOf(comboBox.getSelectedIndex());
+                String taxId = taxField.getText();
+                boolean usCitizen = citisenCheckBox.isSelected();
 
-                FormEvent event = new FormEvent(this, name, occupation,ageCat.getId(),empCat);
+
+                FormEvent event = new FormEvent(this, name, occupation, ageCat.getId(), empCat, taxId, usCitizen);
                 if (formListener != null) {
                     formListener.formEventOccured(event);
                 }
@@ -73,7 +97,7 @@ public class FormPanel extends JPanel {
         this.formListener = formListener;
     }
 
-    public void layoutComponent(){
+    public void layoutComponent() {
         //setBorder(BorderFactory.createTitledBorder("Add Prefix"));
         Border innerBorder = BorderFactory.createTitledBorder("Add Person");
         Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -156,6 +180,40 @@ public class FormPanel extends JPanel {
         gc.gridy++;
 
         gc.weightx = 1;
+        gc.weighty = 0.8;
+        gc.anchor = GridBagConstraints.FIRST_LINE_END;
+        gc.gridx = 0;
+        gc.insets = new Insets(0, 0, 0, 0);
+        add(new JLabel("Belarus citizen: "), gc);
+
+        gc.weightx = 1;
+        gc.weighty = 1.1;
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(citisenCheckBox, gc);
+        //foth row
+
+        gc.gridy++;
+
+        gc.weightx = 1;
+        gc.weighty = 0.8;
+        gc.anchor = GridBagConstraints.FIRST_LINE_END;
+        gc.gridx = 0;
+        gc.insets = new Insets(0, 0, 0, 0);
+        add(taxLable, gc);
+
+        gc.weightx = 1;
+        gc.weighty = 1.1;
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(taxField, gc);
+
+
+        //foth row
+
+        gc.gridy++;
+
+        gc.weightx = 1;
         gc.weighty = 1.1;
         gc.gridx = 1;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -163,7 +221,8 @@ public class FormPanel extends JPanel {
     }
 
 }
-class AgeCategory{
+
+class AgeCategory {
     private int id;
     private String text;
 
@@ -174,7 +233,7 @@ class AgeCategory{
 
     @Override
     public String toString() {
-        return  text ;
+        return text;
     }
 
     public int getId() {
