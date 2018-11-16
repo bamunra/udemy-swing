@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class MyFrame extends JFrame {
 
@@ -17,7 +18,7 @@ public class MyFrame extends JFrame {
     private JFileChooser fileChooser;
 
     private Controller controller;
-
+    private TablePannel tablePannel;
 
     public MyFrame() throws HeadlessException {
 
@@ -28,13 +29,16 @@ public class MyFrame extends JFrame {
         textArea = new MyTextPanel();
         button1 = new JButton("Click me");
         formPanel = new FormPanel();
+        tablePannel = new TablePannel();
 
         controller = new Controller();
 
+        tablePannel.setData(controller.getPerson());
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
-        add(textArea, BorderLayout.CENTER);
+        add(tablePannel, BorderLayout.CENTER);
+        //add(textArea, BorderLayout.CENTER);
         add(button1, BorderLayout.SOUTH);
         add(formPanel, BorderLayout.WEST);
 
@@ -58,21 +62,13 @@ public class MyFrame extends JFrame {
 
         formPanel.setFormListener(new FormListener() {
             public void formEventOccured(FormEvent event) {
-//                String name = event.getName();
-//                String occupation = event.getOccupation();
-//                int ageCat = event.getAgeCategory();
-//                String empCat = event.getEmpCategory();
-//                String gender = event.getGender();
-//
-//                textArea.appendTxt(name + ": " + occupation + ": " + ageCat + ": " + empCat + ": " + gender + "\n");
-
                 controller.addPerson(event);
-
+                tablePannel.refresh();
             }
         });
 
 
-        setSize(700, 800);
+        setSize(700, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -117,17 +113,26 @@ public class MyFrame extends JFrame {
         importData.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               if (fileChooser.showOpenDialog(MyFrame.this) == JFileChooser.APPROVE_OPTION){
-                   System.out.println(fileChooser.getSelectedFile());
-               }
+                if (fileChooser.showOpenDialog(MyFrame.this) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        controller.loadFromFile(fileChooser.getSelectedFile());
+                        tablePannel.refresh();
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(MyFrame.this,"Load data from file failed");
+                    }
+                }
             }
         });
 
         exportData.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (fileChooser.showSaveDialog(MyFrame.this) == JFileChooser.APPROVE_OPTION){
-                    System.out.println(fileChooser.getSelectedFile());
+                if (fileChooser.showSaveDialog(MyFrame.this) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        controller.saveToFile(fileChooser.getSelectedFile());
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(MyFrame.this,"Save data to file failed");
+                    }
                 }
             }
         });
