@@ -1,3 +1,7 @@
+package gui;
+
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +16,8 @@ public class MyFrame extends JFrame {
     private FormPanel formPanel;
     private JFileChooser fileChooser;
 
+    private Controller controller;
+
 
     public MyFrame() throws HeadlessException {
 
@@ -23,7 +29,10 @@ public class MyFrame extends JFrame {
         button1 = new JButton("Click me");
         formPanel = new FormPanel();
 
+        controller = new Controller();
+
         fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
         add(textArea, BorderLayout.CENTER);
         add(button1, BorderLayout.SOUTH);
@@ -49,13 +58,15 @@ public class MyFrame extends JFrame {
 
         formPanel.setFormListener(new FormListener() {
             public void formEventOccured(FormEvent event) {
-                String name = event.getName();
-                String occupation = event.getOccupation();
-                int ageCat = event.getAgeCategory();
-                String empCat = event.getEmpCategory();
-                String gender = event.getGender();
+//                String name = event.getName();
+//                String occupation = event.getOccupation();
+//                int ageCat = event.getAgeCategory();
+//                String empCat = event.getEmpCategory();
+//                String gender = event.getGender();
+//
+//                textArea.appendTxt(name + ": " + occupation + ": " + ageCat + ": " + empCat + ": " + gender + "\n");
 
-                textArea.appendTxt(name + ": " + occupation + ": " + ageCat + ": " + empCat + ": " + gender + "\n");
+                controller.addPerson(event);
 
             }
         });
