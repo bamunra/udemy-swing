@@ -6,6 +6,8 @@ public class Person implements Serializable{
 
     private static int count = 0;
 
+    private static final long serialVersionUID = -99999;
+
     private int id;
     private String name;
     private String occupation;
