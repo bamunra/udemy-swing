@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.prefs.Preferences;
 
 public class PrefsDialog extends JDialog{
 
@@ -13,6 +14,7 @@ public class PrefsDialog extends JDialog{
     private SpinnerNumberModel spinnerNumberModel;
     private JPasswordField passwordField;
     private JTextField userField;
+    private PrefsListener prefsListener;
 
     public PrefsDialog(JFrame parent) {
 
@@ -78,6 +80,11 @@ public class PrefsDialog extends JDialog{
                 Integer val = (Integer) portSpinner.getValue();
                 String user = userField.getText();
                 char[] password = passwordField.getPassword();
+
+                if (prefsListener != null){
+                    prefsListener.preferencesSet(user, String.valueOf(passwordField.getPassword()),val);
+                }
+
                 System.out.println(val + user + String.valueOf(password));
                 setVisible(false);
 
@@ -95,5 +102,16 @@ public class PrefsDialog extends JDialog{
         setLocationRelativeTo(parent);
 
 
+    }
+
+    public void setDefoults(String user, String password, int port){
+        userField.setText(user);
+        passwordField.setText(password);
+        portSpinner.setValue(port);
+    }
+
+    public void setPrefsListener(PrefsListener prefsListener) {
+
+        this.prefsListener = prefsListener;
     }
 }

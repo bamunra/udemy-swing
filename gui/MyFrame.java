@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 public class MyFrame extends JFrame {
 
@@ -17,6 +18,7 @@ public class MyFrame extends JFrame {
     private FormPanel formPanel;
     private JFileChooser fileChooser;
     private PrefsDialog prefsDialog;
+    private Preferences prefs;
 
 
     private Controller controller;
@@ -33,7 +35,7 @@ public class MyFrame extends JFrame {
         formPanel = new FormPanel();
         tablePannel = new TablePannel();
         prefsDialog = new PrefsDialog(this);
-
+        prefs = Preferences.userRoot().node("db");
 
         controller = new Controller();
 
@@ -45,6 +47,21 @@ public class MyFrame extends JFrame {
                 tablePannel.refresh();
             };
         });
+
+        prefsDialog.setPrefsListener(new PrefsListener(){
+            @Override
+            public void preferencesSet(String user, String password, int port) {
+                prefs.put("user",user);
+                prefs.put("password",password);
+                prefs.putInt("port", port);
+            }
+        });
+
+        String user = prefs.get("user","");
+        String password = prefs.get("password", "");
+        Integer port = prefs.getInt("port",3306);
+        prefsDialog.setDefoults(user,password,port);
+
 
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
@@ -118,6 +135,7 @@ public class MyFrame extends JFrame {
                 prefsDialog.setVisible(true);
             }
         });
+
 
         showFormItem.addActionListener(new ActionListener() {
             @Override
