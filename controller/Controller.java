@@ -70,4 +70,7 @@ public class Controller {
         db.loadFromFile(file);
     }
 
+    public void removePerson(int index) {
+        db.removePerson(index);
+    }
 }

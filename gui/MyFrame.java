@@ -34,6 +34,14 @@ public class MyFrame extends JFrame {
         controller = new Controller();
 
         tablePannel.setData(controller.getPerson());
+
+        tablePannel.setPersonTableListener(new PersonTableListener(){
+            public void rowDeleted(int  row){
+                controller.removePerson(row);
+                tablePannel.refresh();
+            };
+        });
+
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
 

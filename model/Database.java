@@ -1,16 +1,14 @@
 package model;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Database {
 
-    private ArrayList<Person> people;
+    private LinkedList<Person> people;
 
     public Database() {
-        people = new ArrayList<Person>();
+        people = new LinkedList<>();
     }
 
     public void addPerson(Person person){
@@ -18,7 +16,7 @@ public class Database {
     }
 
     public List<Person> getPeople(){
-        return people;
+        return Collections.unmodifiableList(people);
     }
 
     public void saveToFile(File file) throws IOException {
@@ -47,5 +45,11 @@ public class Database {
 
 
         ius.close();
+    }
+
+    public void removePerson(int index) {
+
+        people.remove(index);
+
     }
 }
