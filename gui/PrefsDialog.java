@@ -11,12 +11,17 @@ public class PrefsDialog extends JDialog{
     private JButton cancelButton;
     private JSpinner portSpinner;
     private SpinnerNumberModel spinnerNumberModel;
+    private JPasswordField passwordField;
+    private JTextField userField;
 
     public PrefsDialog(JFrame parent) {
 
         super(parent,"Prefetences", true);
         okButton = new JButton("OK");
         cancelButton = new JButton("Cancel");
+        userField = new JTextField(10);
+        passwordField = new JPasswordField(10);
+        passwordField.setEchoChar('*');
 
         spinnerNumberModel = new SpinnerNumberModel(3306,0,9999,1);
         portSpinner = new JSpinner(spinnerNumberModel);
@@ -30,7 +35,26 @@ public class PrefsDialog extends JDialog{
         gc.fill = GridBagConstraints.NONE;
 
 
+        gc.gridx = 0;
+        add(new JLabel("User: "),gc);
 
+
+        gc.gridx++;
+        add(userField,gc);
+
+        //+++++++++++++++++++++
+        gc.gridy++;
+        gc.gridx = 0;
+        add(new JLabel("Password: "),gc);
+
+
+        gc.gridx++;
+        add(passwordField,gc);
+
+        //+++++++++++++++++++++
+
+
+        gc.gridy++;
         gc.gridx = 0;
         add(new JLabel("Port: "),gc);
 
@@ -52,8 +76,9 @@ public class PrefsDialog extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Integer val = (Integer) portSpinner.getValue();
-
-                System.out.println(val);
+                String user = userField.getText();
+                char[] password = passwordField.getPassword();
+                System.out.println(val + user + String.valueOf(password));
                 setVisible(false);
 
             }
