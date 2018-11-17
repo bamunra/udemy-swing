@@ -16,6 +16,8 @@ public class MyFrame extends JFrame {
     private MyToolBar toolBar;
     private FormPanel formPanel;
     private JFileChooser fileChooser;
+    private PrefsDialog prefsDialog;
+
 
     private Controller controller;
     private TablePannel tablePannel;
@@ -30,6 +32,8 @@ public class MyFrame extends JFrame {
         button1 = new JButton("Click me");
         formPanel = new FormPanel();
         tablePannel = new TablePannel();
+        prefsDialog = new PrefsDialog(this);
+
 
         controller = new Controller();
 
@@ -96,14 +100,24 @@ public class MyFrame extends JFrame {
 
         JMenu windowMenu = new JMenu("Window");
         JMenu showMenu = new JMenu("Show");
+        JMenuItem prefsItem = new JMenuItem("Preferences.....");
+
         JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");
         showFormItem.setSelected(true);
 
         showMenu.add(showFormItem);
         windowMenu.add(showMenu);
+        windowMenu.add(prefsItem);
 
         menuBar.add(fileMenu);
         menuBar.add(windowMenu);
+
+        prefsItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                prefsDialog.setVisible(true);
+            }
+        });
 
         showFormItem.addActionListener(new ActionListener() {
             @Override
