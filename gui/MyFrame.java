@@ -164,6 +164,7 @@ public class MyFrame extends JFrame {
             }
         });
         importData.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
+        prefsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
 
 
         exportData.addActionListener(new ActionListener() {
