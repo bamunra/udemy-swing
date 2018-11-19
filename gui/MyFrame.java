@@ -4,9 +4,7 @@ import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.prefs.Preferences;
@@ -42,26 +40,28 @@ public class MyFrame extends JFrame {
 
         tablePannel.setData(controller.getPerson());
 
-        tablePannel.setPersonTableListener(new PersonTableListener(){
-            public void rowDeleted(int  row){
+        tablePannel.setPersonTableListener(new PersonTableListener() {
+            public void rowDeleted(int row) {
                 controller.removePerson(row);
                 tablePannel.refresh();
-            };
+            }
+
+            ;
         });
 
-        prefsDialog.setPrefsListener(new PrefsListener(){
+        prefsDialog.setPrefsListener(new PrefsListener() {
             @Override
             public void preferencesSet(String user, String password, int port) {
-                prefs.put("user",user);
-                prefs.put("password",password);
+                prefs.put("user", user);
+                prefs.put("password", password);
                 prefs.putInt("port", port);
             }
         });
 
-        String user = prefs.get("user","");
+        String user = prefs.get("user", "");
         String password = prefs.get("password", "");
-        Integer port = prefs.getInt("port",3306);
-        prefsDialog.setDefoults(user,password,port);
+        Integer port = prefs.getInt("port", 3306);
+        prefsDialog.setDefoults(user, password, port);
 
 
         fileChooser = new JFileChooser();
@@ -117,8 +117,17 @@ public class MyFrame extends JFrame {
         });
 
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("Window closing");
+                dispose();
+                System.gc();
+                        }
+        });
+
         setSize(700, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setVisible(true);
 
     }
@@ -178,7 +187,7 @@ public class MyFrame extends JFrame {
                         controller.loadFromFile(fileChooser.getSelectedFile());
                         tablePannel.refresh();
                     } catch (IOException e1) {
-                        JOptionPane.showMessageDialog(MyFrame.this,"Load data from file failed");
+                        JOptionPane.showMessageDialog(MyFrame.this, "Load data from file failed");
                     }
                 }
             }
@@ -194,7 +203,7 @@ public class MyFrame extends JFrame {
                     try {
                         controller.saveToFile(fileChooser.getSelectedFile());
                     } catch (IOException e1) {
-                        JOptionPane.showMessageDialog(MyFrame.this,"Save data to file failed");
+                        JOptionPane.showMessageDialog(MyFrame.this, "Save data to file failed");
                     }
                 }
             }
@@ -207,7 +216,11 @@ public class MyFrame extends JFrame {
                 int action = JOptionPane.showConfirmDialog(MyFrame.this, "Do you really want to liave application",
                         "Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
                 if (action == JOptionPane.OK_OPTION) {
-                    System.exit(0);
+                    WindowListener[] listeners = getWindowListeners();
+                    for (WindowListener listener:listeners) {
+                        listener.windowClosing(new WindowEvent(MyFrame.this ,0));
+                    }
+                    //System.exit(0);
                 }
             }
         });
