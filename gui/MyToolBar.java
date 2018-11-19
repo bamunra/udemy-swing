@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 
 public class MyToolBar extends JPanel implements ActionListener {
 
-    private JButton button1;
-    private JButton button2;
-    private StreemListner textListener;
+    private JButton saveButton;
+    private JButton refreshButton;
+    private ToolBarListner toolBarListner;
 
     public MyToolBar() {
 
@@ -18,18 +18,18 @@ public class MyToolBar extends JPanel implements ActionListener {
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        button1 = new JButton("Hello");
-        button1.addActionListener(this);
-        add(button1);
+        saveButton = new JButton("Save");
+        saveButton.addActionListener(this);
+        add(saveButton);
 
-        button2 = new JButton("GoodBye");
-        button2.addActionListener(this);
-        add(button2);
+        refreshButton = new JButton("Refresh");
+        refreshButton.addActionListener(this);
+        add(refreshButton);
 
     }
 
-    public void setTextListener(StreemListner textListener) {
-        this.textListener = textListener;
+    public void setToolBarListner(ToolBarListner toolBarListner) {
+        this.toolBarListner = toolBarListner;
     }
 
     @Override
@@ -37,12 +37,12 @@ public class MyToolBar extends JPanel implements ActionListener {
 
         JButton clicked = (JButton) e.getSource();
 
-        if (clicked == button1) {
-           if (textListener != null) {
-            textListener.textEmmited("Hello");}
-        } else if (clicked == button2) {
-           if (textListener != null) {
-            textListener.textEmmited("GoodBye");}
+        if (clicked == saveButton) {
+           if (toolBarListner != null) {
+            toolBarListner.saveEventOccured();}
+        } else if (clicked == refreshButton) {
+           if (toolBarListner != null) {
+            toolBarListner.refreshEventOccured();}
         }
 
     }

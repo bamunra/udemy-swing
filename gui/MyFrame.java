@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.prefs.Preferences;
 
 public class MyFrame extends JFrame {
@@ -80,10 +81,29 @@ public class MyFrame extends JFrame {
 
         toolBar = new MyToolBar();
         add(toolBar, BorderLayout.NORTH);
-        toolBar.setTextListener(new StreemListner() {
+        toolBar.setToolBarListner(new ToolBarListner() {
             @Override
-            public void textEmmited(String text) {
-                System.out.println(text + "wer");
+            public void saveEventOccured() {
+
+                try {
+                    controller.connect();
+                    controller.save();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(MyFrame.this, "Save database problem");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void refreshEventOccured() {
+                try {
+                    controller.connect();
+                    controller.load();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(MyFrame.this, "Load database problem");
+                    e.printStackTrace();
+                }
+                tablePannel.refresh();
             }
         });
 

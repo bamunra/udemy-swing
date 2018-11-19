@@ -13,8 +13,8 @@ public class TestDatabase {
 
         db.connect();
 
-        db.addPerson(new Person("Joe", "Builder", AgeCategory.adult, EmploymentCategory.employed,"777",true, Gender.male));
-        db.addPerson(new Person("Sue", "Artist", AgeCategory.senior, EmploymentCategory.selfemployed,null,false, Gender.female));
+        db.addPerson(new Person("Joe", "Porno star", AgeCategory.adult, EmploymentCategory.employed,"777",true, Gender.male));
+        db.addPerson(new Person("Sue", "Porno star", AgeCategory.senior, EmploymentCategory.selfemployed,null,false, Gender.female));
 
         try {
             db.save();

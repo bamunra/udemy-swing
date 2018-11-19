@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Person implements Serializable{
 
-    private static int count = 0;
+    private static int count = 1;
 
     private static final long serialVersionUID = -99999;
 
@@ -29,6 +29,14 @@ public class Person implements Serializable{
         this.id = count;
         count++;
     }
+
+    public Person(int id,String name, String occupation, AgeCategory ageCategory, EmploymentCategory empCategory, String taxId, boolean usCitizen, Gender gender) {
+
+        this (name,occupation ,ageCategory ,empCategory ,taxId ,usCitizen ,gender );
+        this.id = id;
+
+    }
+
 
     public int getId() {
         return id;
