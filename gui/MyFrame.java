@@ -1,6 +1,7 @@
 package gui;
 
 import controller.Controller;
+import javafx.scene.control.SplitPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class MyFrame extends JFrame {
     private JFileChooser fileChooser;
     private PrefsDialog prefsDialog;
     private Preferences prefs;
-
+    private JSplitPane splitPane;
 
     private Controller controller;
     private TablePannel tablePannel;
@@ -35,6 +36,9 @@ public class MyFrame extends JFrame {
         tablePannel = new TablePannel();
         prefsDialog = new PrefsDialog(this);
         prefs = Preferences.userRoot().node("db");
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, tablePannel);
+
+        splitPane.setOneTouchExpandable(true);
 
         controller = new Controller();
 
@@ -67,10 +71,12 @@ public class MyFrame extends JFrame {
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
-        add(tablePannel, BorderLayout.CENTER);
+
+        add(splitPane,BorderLayout.CENTER);
+        //add(tablePannel, BorderLayout.CENTER);
         //add(textArea, BorderLayout.CENTER);
-        add(button1, BorderLayout.SOUTH);
-        add(formPanel, BorderLayout.WEST);
+        //add(button1, BorderLayout.SOUTH);
+        //add(formPanel, BorderLayout.WEST);
 
         button1.addActionListener(new ActionListener() {
             @Override
@@ -171,6 +177,10 @@ public class MyFrame extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) event.getSource();
                 formPanel.setVisible(menuItem.isSelected());
+
+                if (menuItem.isSelected()){
+                    splitPane.setDividerLocation(formPanel.getMinimumSize().getWidth());
+                }
 
             }
         });
