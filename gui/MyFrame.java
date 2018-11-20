@@ -80,7 +80,7 @@ public class MyFrame extends JFrame {
         });
 
         toolBar = new MyToolBar();
-        add(toolBar, BorderLayout.NORTH);
+        add(toolBar, BorderLayout.PAGE_START);
         toolBar.setToolBarListner(new ToolBarListner() {
             @Override
             public void saveEventOccured() {
