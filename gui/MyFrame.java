@@ -21,6 +21,8 @@ public class MyFrame extends JFrame {
     private Preferences prefs;
     private JSplitPane splitPane;
     private JTabbedPane tabbedPane;
+    private MessagePanel messagePanel;
+
 
     private Controller controller;
     private TablePannel tablePannel;
@@ -39,9 +41,11 @@ public class MyFrame extends JFrame {
         prefs = Preferences.userRoot().node("db");
         tabbedPane = new JTabbedPane();
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, tabbedPane);
+        messagePanel = new MessagePanel();
+
 
         tabbedPane.add("Person Database", tablePannel);
-        tabbedPane.add("Messages",textArea);
+        tabbedPane.add("Messages",messagePanel);
 
         splitPane.setOneTouchExpandable(true);
 
