@@ -1,10 +1,10 @@
 package gui;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+
 
 public class MyToolBar extends JToolBar implements ActionListener {
 
@@ -22,16 +22,22 @@ public class MyToolBar extends JToolBar implements ActionListener {
         saveButton = new JButton();
         saveButton.addActionListener(this);
         saveButton.setIcon(createIcon("/icons/general/Save16.gif"));
+        //saveButton.setIcon(Utils.createIcon("Raznoe/Java/swing_1/src/icons/general/SaveAs16.gif"));
         saveButton.setToolTipText("Save");
         add(saveButton);
         //addSeparator();
 
         refreshButton = new JButton();
         refreshButton.addActionListener(this);
+        //refreshButton.setIcon(Utils.createIcon("Raznoe/Java/swing_1/src/icons/general/SaveAs16.gif"));
         refreshButton.setIcon(createIcon("/icons/general/refresh16.gif"));
         refreshButton.setToolTipText("Refresh");
         add(refreshButton);
 
+    }
+
+    public void setToolBarListner(ToolBarListner toolBarListner) {
+        this.toolBarListner = toolBarListner;
     }
 
     private ImageIcon createIcon(String path){
@@ -41,10 +47,6 @@ public class MyToolBar extends JToolBar implements ActionListener {
         }
         ImageIcon imageIcon = new ImageIcon(url);
         return imageIcon;
-    }
-
-    public void setToolBarListner(ToolBarListner toolBarListner) {
-        this.toolBarListner = toolBarListner;
     }
 
     @Override
@@ -59,6 +61,7 @@ public class MyToolBar extends JToolBar implements ActionListener {
            if (toolBarListner != null) {
             toolBarListner.refreshEventOccured();}
         }
+
 
     }
 }

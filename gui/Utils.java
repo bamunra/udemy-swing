@@ -1,5 +1,8 @@
 package gui;
 
+import javax.swing.*;
+import java.net.URL;
+
 public class Utils {
 
     public static String getFileExtension(String name){
@@ -16,6 +19,14 @@ public class Utils {
 
         return name.substring(pointIndex,name.length());
 
+    }
+    public static ImageIcon createIcon(String path){
+        URL url =  System.class.getResource(path);
+        if (url == null){
+            System.err.println("Unable to load resourse " + path);
+        }
+        ImageIcon imageIcon = new ImageIcon(path);
+        return imageIcon;
     }
 
 }
