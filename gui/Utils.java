@@ -25,7 +25,7 @@ public class Utils {
         if (url == null){
             System.err.println("Unable to load resourse " + path);
         }
-        ImageIcon imageIcon = new ImageIcon(path);
+        ImageIcon imageIcon = new ImageIcon(url);
         return imageIcon;
     }
 
