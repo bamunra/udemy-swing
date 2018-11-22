@@ -21,7 +21,12 @@ public class MyToolBar extends JToolBar implements ActionListener {
 
         saveButton = new JButton();
         saveButton.addActionListener(this);
+
+        // Doesn't work
+        //saveButton.setIcon(Utils.createIcon("/icons/general/Save16.gif"));
+        // This one works
         saveButton.setIcon(createIcon("/icons/general/Save16.gif"));
+
         //saveButton.setIcon(Utils.createIcon("Raznoe/Java/swing_1/src/icons/general/SaveAs16.gif"));
         saveButton.setToolTipText("Save");
         add(saveButton);
