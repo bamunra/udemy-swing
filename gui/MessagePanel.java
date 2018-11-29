@@ -57,10 +57,10 @@ public class MessagePanel extends JPanel {
     private Set<Integer> selectedServers;
     private MessageServer messageServer;
 
-    public MessagePanel() {
+    public MessagePanel(JFrame parent) {
 
 
-        progressDialog = new ProgressDialog((Window) getParent());
+        progressDialog = new ProgressDialog(parent);
         messageServer = new MessageServer();
         selectedServers = new TreeSet<Integer>();
         selectedServers.add(0);
@@ -121,14 +121,14 @@ public class MessagePanel extends JPanel {
     }
 
     private void retrieveMessages() {
-        System.out.println("Message waiting" + messageServer.getMessageCount());
-
+        //System.out.println("Message waiting" + messageServer.getMessageCount());
+        progressDialog.setMaximum(messageServer.getMessageCount());
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Showing modal dialog");
+                //System.out.println("Showing modal dialog");
                 progressDialog.setVisible(true);
-                System.out.println("Finish showing modal dialog");
+                //System.out.println("Finish showing modal dialog");
             }
         });
 
@@ -157,8 +157,8 @@ public class MessagePanel extends JPanel {
 
                 int retrieved = counts.get(counts.size()-1);
 
-                System.out.println("Got " + retrieved + " messages.");
-
+                //System.out.println("Got " + retrieved + " messages.");
+                progressDialog.setValue(retrieved);
 
             }
 
