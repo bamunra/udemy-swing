@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: F:\Raznoe\Java\swing_1\out\production\swing_1\gui\App.clas
+ s
+Main-Class: gui.App
+
